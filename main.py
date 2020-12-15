@@ -30,7 +30,7 @@ def NoticeTimer():
             print("New Notice : " + newNotice)
             if "[거래] 원화 마켓 디지털 자산 추가" in newNotice:
                 coinName = newNotice.split(" ")[7].replace(")", "")
-                print("Buy Coin : " + coinName)
+                print("코인 이름 : " + coinName)
                 BuyCoin(coinName)
     finally:
         threading.Timer(0.5, NoticeTimer).start()
