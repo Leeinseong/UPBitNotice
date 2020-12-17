@@ -5,12 +5,13 @@ import jwt
 import uuid
 import hashlib
 from urllib.parse import urlencode
+import time
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 # 업비트 공지 Api
-url = "https://api-manager.upbit.com/api/v1/notices?page=1&per_page=1&thread_name=general"
+url = "http://api-manager.upbit.com/api/v1/notices?page=1&per_page=1&thread_name=general"
 response = requests.get(url).json()
 prevNotice = response["data"]["list"][0]["title"]
 print(prevNotice)
@@ -32,6 +33,9 @@ def NoticeTimer():
                 coinName = newNotice.split(" ")[7].replace(")", "")
                 print("코인 이름 : " + coinName)
                 BuyCoin(coinName)
+    except requests.exceptions.ConnectionError:
+        print("Connection refused by the server..")
+        time.sleep(5)
     finally:
         threading.Timer(0.5, NoticeTimer).start()
 
